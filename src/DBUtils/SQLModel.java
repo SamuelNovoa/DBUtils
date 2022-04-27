@@ -11,19 +11,19 @@ import java.lang.reflect.Field;
  *
  * @author a21samuelnc
  */
-public abstract class Model {
+public abstract class SQLModel {
     protected String table;
     protected String primary;
     
     public String id;
     
-    public Model(String table, String primary) {
+    public SQLModel(String table, String primary) {
         this.id = "0";
         this.table = table;
         this.primary = primary;
     }
     
-    public boolean save() {
+    protected boolean save() {
         Field[] _fields = this.getClass().getFields();
         
         String[] fields = new String[_fields.length];
@@ -36,7 +36,6 @@ public abstract class Model {
             } catch (IllegalArgumentException | IllegalAccessException ex) {
                 return false;
             }
-            
         }
         
         return SQLMgr.update(table, primary, id, fields, data);
